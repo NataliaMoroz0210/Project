@@ -20,7 +20,7 @@ public class FxApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sampleA.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("sampleAuthorization.fxml")));
         primaryStage.setTitle("Авторизация");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();

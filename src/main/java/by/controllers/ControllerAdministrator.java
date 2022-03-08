@@ -7,8 +7,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.text.Text;
 import by.models.User;
+import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.xssf.usermodel.*;
 
-public class TableController {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class ControllerAdministrator {
+
     @FXML
     private TableView<User> table;
     @FXML
@@ -32,7 +41,6 @@ public class TableController {
     @FXML
     private Button change;
 
-
     public void initialize() {
         table.setEditable(true);
         labelUserType.setCellValueFactory(new PropertyValueFactory<User, String>("userType"));
@@ -48,7 +56,6 @@ public class TableController {
             text.textProperty().bind(cell.itemProperty());
             return cell;
         });
-
     }
 
     protected void onTransferData(ObservableList<User> users) {
@@ -75,9 +82,7 @@ public class TableController {
         if (table.getSelectionModel().getSelectedItem() != null) {
             User selectedUser = table.getSelectionModel().getSelectedItem();
             table.getItems().remove(selectedUser);
-
         }
-
     }
 
     @FXML
@@ -87,7 +92,7 @@ public class TableController {
             selectedUser.setPassword("123");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Информация");
-            alert.setHeaderText("Установлен пароль по умолчанию 123, рекомендается изменить");
+            alert.setHeaderText("Установлен пароль по умолчанию 123, рекомендуется изменить");
             alert.showAndWait();
         }
     }
@@ -135,5 +140,64 @@ public class TableController {
         });
     }
 
+    @FXML
+    protected void onExcel() {
+        final String reportsFolder = "D:\\";
+        //Date date = new Date();
+        String reportFileName = reportsFolder + File.separator + "New_ExcelX" + ".xlsx";
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Список пользователей");
+        XSSFRow row = sheet.createRow(0);
+        row.createCell(0).setCellValue(labelUserType.getText());
+        row.createCell(1).setCellValue(labelDepartment.getText());
+        row.createCell(2).setCellValue(labelLogin.getText());
+        row.createCell(3).setCellValue(status.getText());
+
+        sheet.setColumnWidth(0, 6000);
+        sheet.setColumnWidth(1, 6000);
+        sheet.setColumnWidth(2, 6000);
+        sheet.setColumnWidth(3, 6000);
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setWrapText(true);
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
+        style.setAlignment(HorizontalAlignment.CENTER);
+
+        DataFormat format = workbook.createDataFormat();
+        String formatStyle = "#0.000";
+        style.setDataFormat(format.getFormat(formatStyle));
+
+        XSSFFont font = workbook.createFont();
+        font.setFontName("Times New Roman");
+        font.setFontHeightInPoints((short) 14);
+        font.setBold(true);
+        style.setFont(font);
+        row.getCell(0).setCellStyle(style);
+        row.getCell(1).setCellStyle(style);
+        row.getCell(2).setCellStyle(style);
+        row.getCell(3).setCellStyle(style);
+
+        for (int i = 0; i < Controller.users.size(); i++){
+            User user = Controller.users.get(i);
+            XSSFRow rowUser = sheet.createRow(i + 1);
+            XSSFCell cell = rowUser.createCell(0);
+            cell.setCellValue(user.getUserType());
+            cell = rowUser.createCell(1);
+            cell.setCellValue(user.getDepartment());
+            cell = rowUser.createCell(2);
+            cell.setCellValue(user.getLogin());
+            cell = rowUser.createCell(3);
+            cell.setCellValue(user.getStatus());
+        }
+
+        try (FileOutputStream out = new FileOutputStream(reportFileName)) {
+            workbook.write(out);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Информация");
+            alert.setHeaderText("Список сохранён");
+            alert.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException("Ошибка инициализации файла для записи данных отчета.");
+        }
+    }
 }
 

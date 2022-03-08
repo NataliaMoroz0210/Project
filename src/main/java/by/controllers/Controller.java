@@ -24,7 +24,7 @@ import static javafx.stage.Modality.WINDOW_MODAL;
 public class Controller implements Initializable {
 
     public static ObservableList<User> users = FXCollections.observableArrayList();
-    TableController tableController;
+    ControllerAdministrator tableController;
     ControllerContract controllerContract;
     ControllerChangePassword controllerChangePassword;
 
@@ -144,7 +144,7 @@ public class Controller implements Initializable {
                 activeUser = user;
                 if (userType.getValue().equals("Администратор")) {
                     Stage stage = new Stage();
-                    loader = new FXMLLoader(FxApplication.class.getResource("tableA.fxml"));
+                    loader = new FXMLLoader(FxApplication.class.getResource("tableAdministrator.fxml"));
                     stage.setScene(new Scene(loader.load()));
                     stage.setTitle("Список пользователей");
                     stage.initModality(WINDOW_MODAL);
@@ -156,7 +156,7 @@ public class Controller implements Initializable {
                 }
                 if (userType.getValue().equals("Исполнитель")) {
                     Stage stage = new Stage();
-                    loader = new FXMLLoader(FxApplication.class.getResource("sampleP.fxml"));
+                    loader = new FXMLLoader(FxApplication.class.getResource("sampleExecutor.fxml"));
                     stage.setScene(new Scene(loader.load()));
                     stage.setTitle("Регистрация договора");
                     stage.initModality(WINDOW_MODAL);
@@ -197,7 +197,7 @@ public class Controller implements Initializable {
             if (user.equals(newUser)) {
                 activeUser = user;
                 Stage stage = new Stage();
-                FXMLLoader loader = new FXMLLoader(FxApplication.class.getResource("sampleCP.fxml"));
+                FXMLLoader loader = new FXMLLoader(FxApplication.class.getResource("sampleChangePassword.fxml"));
                 stage.setScene(new Scene(loader.load()));
                 stage.setTitle("Смена пароля пользователя");
                 stage.initModality(WINDOW_MODAL);
