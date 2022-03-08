@@ -11,7 +11,6 @@ import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.*;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -143,8 +142,7 @@ public class ControllerAdministrator {
     @FXML
     protected void onExcel() {
         final String reportsFolder = "D:\\";
-        //Date date = new Date();
-        String reportFileName = reportsFolder + File.separator + "New_ExcelX" + ".xlsx";
+        String reportFileName = reportsFolder + File.separator + "New_ExcelX" + System.currentTimeMillis() + ".xlsx";
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Список пользователей");
         XSSFRow row = sheet.createRow(0);
@@ -176,7 +174,7 @@ public class ControllerAdministrator {
         row.getCell(2).setCellStyle(style);
         row.getCell(3).setCellStyle(style);
 
-        for (int i = 0; i < Controller.users.size(); i++){
+        for (int i = 0; i < Controller.users.size(); i++) {
             User user = Controller.users.get(i);
             XSSFRow rowUser = sheet.createRow(i + 1);
             XSSFCell cell = rowUser.createCell(0);

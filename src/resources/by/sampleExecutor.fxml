@@ -36,7 +36,7 @@
       <RadioButton fx:id="delay" layoutX="33.0" layoutY="605.0" mnemonicParsing="false" text="Отсрочка" />
       <RadioButton fx:id="prepayment" layoutX="32.0" layoutY="564.0" mnemonicParsing="false" text="Предоплата" />
       <RadioButton fx:id="free" layoutX="33.0" layoutY="644.0" mnemonicParsing="false" text="Безвозмездно" />
-      <Button fx:id="registration" contentDisplay="TOP" layoutX="661.0" layoutY="727.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="147.0" text="Зарегистрировать договор" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS" wrapText="true" />
+      <Button fx:id="registration" contentDisplay="TOP" layoutX="661.0" layoutY="727.0" mnemonicParsing="false" onAction="#onRegistration" prefHeight="80.0" prefWidth="147.0" text="Зарегистрировать договор" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS" wrapText="true" />
       <TextField layoutX="608.0" layoutY="429.0" prefHeight="26.0" prefWidth="347.0" promptText="Контакты" />
       <Label layoutX="38.0" layoutY="306.0" text="Загрузить файл" />
       <Label layoutX="360.0" layoutY="271.0" text="Предмет договора" />

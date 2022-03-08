@@ -12,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class Controller implements Initializable {
 
     public static ObservableList<User> users = FXCollections.observableArrayList();
     ControllerAdministrator tableController;
-    ControllerContract controllerContract;
+    ControllerExecutor controllerExecutor;
     ControllerChangePassword controllerChangePassword;
 
     public static User activeUser;
@@ -88,6 +87,8 @@ public class Controller implements Initializable {
                 department.setDisable(newValue.equals("Администратор"));
                 if (newValue.equals("Администратор")) {
                     department.setValue("Администратор");
+                } else {
+                    department.setValue(null);
                 }
             }
         });
@@ -161,7 +162,8 @@ public class Controller implements Initializable {
                     stage.setTitle("Регистрация договора");
                     stage.initModality(WINDOW_MODAL);
                     stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-                    controllerContract = loader.getController();
+                    controllerExecutor = loader.getController();
+                    controllerExecutor.onTransferData();
                     stage.show();
                     return;
                 }
